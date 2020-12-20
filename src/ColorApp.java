@@ -115,11 +115,15 @@ public class ColorApp {
         private JButton bluePalette_subtract;
         private JTextField bluePalette_field;
 
+        private JButton save_button;
+        private JButton reset_button;
+
         public application_view() {
 
             main_window = new JFrame();
             JPanel container = new JPanel(new GridBagLayout());
             GridBagConstraints c =  new GridBagConstraints();
+            GridBagConstraints d = new GridBagConstraints();
             main_window.add(container);
 
             color_viewer = new JPanel();
@@ -128,50 +132,85 @@ public class ColorApp {
             c.weighty = 0;
             c.gridy = 0;
             c.gridx = 0;
-            c.ipady = 150;
+            c.ipady = 100;
             c.insets = new Insets(0, 0,5,5);
             color_viewer.setBackground(Color.BLACK);
             container.add(color_viewer, c);
             container.setBorder(new EmptyBorder(10,10,10,10));
 
-            JPanel color_palette = new JPanel();
+            JPanel color_palette = new JPanel(new GridLayout(3,4));
             c.fill = GridBagConstraints.HORIZONTAL;
             c.weightx = 1;
             c.weighty = 0;
             c.gridy = 1;
             c.gridx = 0;
-            c.ipady = 150;
+            c.ipady = 30;
             c.insets = new Insets(0, 0,5,5);
-            color_palette.setBackground(Color.RED);
             container.add(color_palette, c);
 
+            redPalette_add = new JButton("+");
+            redPalette_subtract = new JButton("-");
+            redPalette_field = new JTextField();
+            JLabel redPalette_label = new JLabel("Red:");
+            color_palette.add(redPalette_label);
+            color_palette.add(redPalette_field);
+            color_palette.add(redPalette_subtract);
+            color_palette.add(redPalette_add);
+
+            greenPalette_add = new JButton("+");
+            greenPalette_subtract = new JButton("-");
+            greenPalette_field = new JTextField();
+            JLabel greenPalette_label = new JLabel("Green:");
+            color_palette.add(greenPalette_label);
+            color_palette.add(greenPalette_field);
+            color_palette.add(greenPalette_subtract);
+            color_palette.add(greenPalette_add);
+
+            bluePalette_add = new JButton("+");
+            bluePalette_subtract = new JButton("-");
+            bluePalette_field = new JTextField();
+            JLabel bluePalette_label = new JLabel("Blue:");
+            color_palette.add(bluePalette_label);
+            color_palette.add(bluePalette_field);
+            color_palette.add(bluePalette_subtract);
+            color_palette.add(bluePalette_add);
+            bluePalette_label.setPreferredSize(new Dimension(60,10));
+            bluePalette_field.setPreferredSize(new Dimension(120, 10));
+            bluePalette_add.setPreferredSize(new Dimension(50, 10));
+            bluePalette_subtract.setPreferredSize(new Dimension(50, 10));
+
+
+
             JPanel color_options = new JPanel();
+            save_button = new JButton("Save");
+            reset_button = new JButton("Reset");
             c.fill = GridBagConstraints.HORIZONTAL;
             c.weightx = 1;
             c.weighty = 0;
             c.gridy = 2;
             c.gridx = 0;
-            c.ipady = 150;
+            c.ipady = -9;
             c.insets = new Insets(0, 0,0,5);
-            color_options.setBackground(Color.GREEN);
             container.add(color_options, c);
+            color_options.add(save_button);
+            color_options.add(reset_button);
+
+
 
             JList color_selection = new JList();
-            c.fill = GridBagConstraints.VERTICAL;
-            c.weightx = 0;
-            c.weighty = 0;
-            c.gridheight = GridBagConstraints.REMAINDER;
-            c.gridy = 0;
-            c.gridx = 1;
-            c.ipady = 150;
-            c.insets = new Insets(0, 0,0,0);
+            d.fill = GridBagConstraints.VERTICAL;
+            d.weightx = 0;
+            d.weighty = 0;
+            d.gridheight = GridBagConstraints.REMAINDER;
+            d.gridy = 0;
+            d.gridx = 1;
+            d.insets = new Insets(0, 0,0,0);
             String[] movies = {"Movie 1", "Movie 2", "Movie 3", "Movie 4"};
             color_selection.setListData(movies);
             color_selection.setFixedCellWidth(110);
-            container.add(color_selection, c);
+            container.add(color_selection, d);
 
-
-            main_window.setSize(200, 530);
+            main_window.setSize(330, 310);
             main_window.setTitle("Color App Java");
             main_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             main_window.setVisible(true);
