@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -73,28 +76,42 @@ public class ColorApp {
     private class application_model {
 
         private color_item selected_color;
-        private DefaultListModel<color_item> loaded_colors;
+        private color_item user_color;
+        private DefaultListModel loaded_colors;
 
-        public application_model(color_item color) {
+        public application_model(String color_save_file) throws IOException {
 
-            selected_color = color;
-            loaded_colors.addElement(new color_item(new Color(244,232,100), "Random Color"));
+            selected_color = new color_item(new Color(0,0,0), "Default");
+            loaded_colors = new DefaultListModel();
+            read_file(color_save_file);
 
         }
 
-        public color_item get_color() {
+        public color_item get_selected_color() {
 
             return selected_color;
 
         }
 
-        public void set_color(color_item color) {
+        public void set_selected_color(color_item color) {
 
             selected_color = color;
 
         }
 
-        public DefaultListModel<color_item> get_colors() {
+        public color_item get_user_color() {
+
+            return user_color;
+
+        }
+
+        public void set_user_color(color_item color) {
+
+            user_color = color;
+
+        }
+
+        public DefaultListModel get_loaded_colors() {
 
             return loaded_colors;
 
@@ -169,6 +186,58 @@ public class ColorApp {
                 selected_color.set_blue(blue_value - 5);
 
             }
+
+        }
+
+        private void read_file(String file) throws IOException {
+
+            FileInputStream istream = new FileInputStream(file);
+            InputStreamReader reader = new InputStreamReader(istream);
+            StreamTokenizer tokens = new StreamTokenizer(reader);
+
+            String color_name;
+            int red_value;
+            int green_value;
+            int blue_value;
+
+            for (int i = 0; tokens.nextToken() != tokens.TT_EOF; i++) {
+
+                color_name = (String) tokens.sval;
+                tokens.nextToken();
+                red_value = (int) tokens.nval;
+                tokens.nextToken();
+                green_value = (int) tokens.nval;
+                tokens.nextToken();
+                blue_value = (int) tokens.nval;
+
+                loaded_colors.addElement(new color_item(new Color(red_value, green_value, blue_value), color_name));
+
+            }
+
+            istream.close();
+
+        }
+
+        private void save_file(String file) throws IOException {
+
+            FileOutputStream ostream = new FileOutputStream(file);
+            PrintWriter writer = new PrintWriter(ostream);
+
+            for (int i = 0; i < loaded_colors.getSize(); i++) {
+
+                color_item saved_color = (color_item) loaded_colors.getElementAt(i);
+
+                String color_name = saved_color.get_name();
+                int red_value = saved_color.get_red();
+                int green_value = saved_color.get_green();
+                int blue_value = saved_color.get_blue();
+
+                writer.println(color_name + " " + String.valueOf(red_value) + " " + String.valueOf(green_value) + " " + String.valueOf(blue_value) + "\n");
+
+            }
+
+            writer.flush();
+            ostream.close();
 
         }
 
@@ -394,80 +463,91 @@ public class ColorApp {
             view.get_greenPalette_subtract().addActionListener(event -> decrement_green_button());
             view.get_bluePalette_add().addActionListener(event -> increment_blue_button());
             view.get_bluePalette_subtract().addActionListener(event -> decrement_blue_button());
+            view.get_color_selection().addListSelectionListener(event -> change_selection());
 
         }
 
         private void initialize_view() {
 
             view.get_main_window().setTitle("Color Picker");
-            view.get_color_viewer().setBackground(new Color(model.get_color().get_red(), model.get_color().get_green(), model.get_color().get_blue()));
-            view.get_redPalette_field().setText(String.valueOf(model.get_color().get_red()));
-            view.get_greenPalette_field().setText(String.valueOf(model.get_color().get_green()));
-            view.get_bluePalette_field().setText(String.valueOf(model.get_color().get_blue()));
+            view.get_color_viewer().setBackground(new Color(model.get_selected_color().get_red(), model.get_selected_color().get_green(), model.get_selected_color().get_blue()));
+            view.get_redPalette_field().setText(String.valueOf(model.get_selected_color().get_red()));
+            view.get_greenPalette_field().setText(String.valueOf(model.get_selected_color().get_green()));
+            view.get_bluePalette_field().setText(String.valueOf(model.get_selected_color().get_blue()));
+            view.get_color_selection().setModel(model.get_loaded_colors());
 
         }
 
         private void increment_red_button() {
 
             model.increment_red();
-            view.get_color_viewer().setBackground(new Color(model.get_color().get_red(), model.get_color().get_green(), model.get_color().get_blue()));
-            view.get_redPalette_field().setText(String.valueOf(model.get_color().get_red()));
+            view.get_color_viewer().setBackground(new Color(model.get_selected_color().get_red(), model.get_selected_color().get_green(), model.get_selected_color().get_blue()));
+            view.get_redPalette_field().setText(String.valueOf(model.get_selected_color().get_red()));
 
         }
 
         private void decrement_red_button() {
 
             model.decrement_red();
-            view.get_color_viewer().setBackground(new Color(model.get_color().get_red(), model.get_color().get_green(), model.get_color().get_blue()));
-            view.get_redPalette_field().setText(String.valueOf(model.get_color().get_red()));
+            view.get_color_viewer().setBackground(new Color(model.get_selected_color().get_red(), model.get_selected_color().get_green(), model.get_selected_color().get_blue()));
+            view.get_redPalette_field().setText(String.valueOf(model.get_selected_color().get_red()));
 
         }
 
         private void increment_green_button() {
 
             model.increment_green();
-            view.get_color_viewer().setBackground(new Color(model.get_color().get_red(), model.get_color().get_green(), model.get_color().get_blue()));
-            view.get_greenPalette_field().setText(String.valueOf(model.get_color().get_green()));
+            view.get_color_viewer().setBackground(new Color(model.get_selected_color().get_red(), model.get_selected_color().get_green(), model.get_selected_color().get_blue()));
+            view.get_greenPalette_field().setText(String.valueOf(model.get_selected_color().get_green()));
 
         }
 
         private void decrement_green_button() {
 
             model.decrement_green();
-            view.get_color_viewer().setBackground(new Color(model.get_color().get_red(), model.get_color().get_green(), model.get_color().get_blue()));
-            view.get_greenPalette_field().setText(String.valueOf(model.get_color().get_green()));
+            view.get_color_viewer().setBackground(new Color(model.get_selected_color().get_red(), model.get_selected_color().get_green(), model.get_selected_color().get_blue()));
+            view.get_greenPalette_field().setText(String.valueOf(model.get_selected_color().get_green()));
 
         }
 
         private void increment_blue_button() {
 
             model.increment_blue();
-            view.get_color_viewer().setBackground(new Color(model.get_color().get_red(), model.get_color().get_green(), model.get_color().get_blue()));
-            view.get_bluePalette_field().setText(String.valueOf(model.get_color().get_blue()));
+            view.get_color_viewer().setBackground(new Color(model.get_selected_color().get_red(), model.get_selected_color().get_green(), model.get_selected_color().get_blue()));
+            view.get_bluePalette_field().setText(String.valueOf(model.get_selected_color().get_blue()));
 
         }
 
         private void decrement_blue_button() {
 
             model.decrement_blue();
-            view.get_color_viewer().setBackground(new Color(model.get_color().get_red(), model.get_color().get_green(), model.get_color().get_blue()));
-            view.get_bluePalette_field().setText(String.valueOf(model.get_color().get_blue()));
+            view.get_color_viewer().setBackground(new Color(model.get_selected_color().get_red(), model.get_selected_color().get_green(), model.get_selected_color().get_blue()));
+            view.get_bluePalette_field().setText(String.valueOf(model.get_selected_color().get_blue()));
 
         }
 
+        private void change_selection() {
+
+            model.set_selected_color((color_item) view.get_color_selection().getSelectedValue());
+            view.get_color_viewer().setBackground(new Color(model.get_selected_color().get_red(), model.get_selected_color().get_green(), model.get_selected_color().get_blue()));
+            view.get_redPalette_field().setText(String.valueOf(model.get_selected_color().get_red()));
+            view.get_greenPalette_field().setText(String.valueOf(model.get_selected_color().get_green()));
+            view.get_bluePalette_field().setText(String.valueOf(model.get_selected_color().get_blue()));
+
+        }
 
     }
 
-    public ColorApp() {
+    public ColorApp() throws IOException {
 
-        application_model Model = new application_model(new color_item(new Color(0,0,0), "Black"));
+        application_model Model = new application_model("colors.txt");
         application_view View = new application_view();
         application_controller Controller = new application_controller(Model, View);
         Controller.initialize_controller();
 
     }
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws IOException {
 
         ColorApp application = new ColorApp();
 
