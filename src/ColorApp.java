@@ -1,6 +1,6 @@
 /*
  -> Created by Araam Zaremehrjardi
- -> Version 1.1
+ -> Version 1.2
  -> CS 326: HW #8
  */
 import java.awt.*;
@@ -399,6 +399,9 @@ public class ColorApp {
             color_palette_constraints.gridx = 0;
             color_palette_constraints.ipady = 30;
             color_palette_constraints.insets = new Insets(0, 0,5,5);
+            redPalette_field.setEditable(false);
+            greenPalette_field.setEditable(false);
+            bluePalette_field.setEditable(false);
             container.add(color_palette, color_palette_constraints);
             color_palette.add(redPalette_label);
             color_palette.add(redPalette_field);
