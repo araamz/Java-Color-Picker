@@ -142,9 +142,6 @@ public class ColorApp {
 
             }
 
-            System.out.println("SELECTED COLOR " + selected_color.get_red() + " RED");
-            System.out.println("PREVIEW COLOR " + preview_color.get_red() + " RED");
-
         }
 
         public void decrement_red() {
@@ -156,9 +153,6 @@ public class ColorApp {
                 preview_color.set_red(red_value - 5);
 
             }
-
-            System.out.println("SELECTED COLOR " + selected_color.get_red() + " RED");
-            System.out.println("PREVIEW COLOR " + preview_color.get_red() + " RED");
 
         }
 
@@ -172,9 +166,6 @@ public class ColorApp {
 
             }
 
-            System.out.println("SELECTED COLOR " + selected_color.get_green() + " GREEN");
-            System.out.println("PREVIEW COLOR " + preview_color.get_green() + " GREEN");
-
         }
 
         public void decrement_green() {
@@ -186,9 +177,6 @@ public class ColorApp {
                 preview_color.set_green(green_value - 5);
 
             }
-
-            System.out.println("SELECTED COLOR " + selected_color.get_green() + " GREEN");
-            System.out.println("PREVIEW COLOR " + preview_color.get_green() + " GREEN");
 
         }
 
@@ -202,9 +190,6 @@ public class ColorApp {
 
             }
 
-            System.out.println("SELECTED COLOR " + selected_color.get_blue() + " BLUE");
-            System.out.println("PREVIEW COLOR " + preview_color.get_blue() + " BLUE");
-
         }
 
         public void decrement_blue() {
@@ -216,9 +201,6 @@ public class ColorApp {
                 preview_color.set_blue(blue_value - 5);
 
             }
-
-            System.out.println("SELECTED COLOR " + selected_color.get_blue() + " BLUE");
-            System.out.println("PREVIEW COLOR " + preview_color.get_blue() + " BLUE");
 
         }
 
@@ -232,8 +214,6 @@ public class ColorApp {
             selected_color.set_green(view_selection.get_green());
             selected_color.set_blue(view_selection.get_blue());
             selected_color.set_name(view_selection.get_name());
-
-            System.out.println("SELECTED COLOR " + view_selection.get_name() + " SELECTION");
 
         }
 
