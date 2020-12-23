@@ -2,19 +2,19 @@ Red 255 0 0
 
 Green 0 255 0
 
-Blue 0 0 255
+Blue 0 0 225
 
-Yellow 255 145 0
+Yellow 255 150 0
 
-Cyan 0 255 255
+Cyan 25 255 255
 
-Magenta 255 0 255
+Magenta 255 0 240
 
 Orange 255 205 0
 
 Pink 255 20 145
 
-Grey 125 0 125
+Grey 125 35 125
 
 Black 0 0 0
 

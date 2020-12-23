@@ -1,6 +1,6 @@
 /*
  -> Created by Araam Zaremehrjardi
- -> Version 1.0
+ -> Version 1.1
  -> CS 326: HW #8
  */
 import java.awt.*;
@@ -257,6 +257,10 @@ public class ColorApp {
             view_selection.set_green(preview_color.get_green());
             view_selection.set_blue(preview_color.get_blue());
             view_selection.set_name(preview_color.get_name());
+            selected_color.set_red(preview_color.get_red());
+            selected_color.set_green(preview_color.get_green());
+            selected_color.set_blue(preview_color.get_blue());
+            selected_color.set_name(preview_color.get_name());
             save_file(color_save_file);
 
         }
