@@ -17,7 +17,7 @@ The business logic of the application is encapsulated within the `application_mo
 <img src="./Images/Image3.png" alt="UML Drawing of Color Picker application." style="width:800px;"/>
 </p>
 <p align="center">
- Fig. 2. UML of the application. 
+Fig. 2. UML of the application. 
  </p>
 
 ## Application Operation.
@@ -29,6 +29,9 @@ When a mouse-click for increasing the blue value via the "+" button occurs the `
 
 
 The View must reflect changes from the Model data. The registered event behaviour uses the *getter* methods to acquire the necssary exposed components of the View which in this includes: the main window, the color viewer, and the blue textfield value. The Controller calls upon `view.get_main_window()`,`view.get_color_viewer()`, and `view.get_bluePalette_field()` to do the conduct the necessary visual changes to the user interface. 
+
+
+Figure 3 shows the process of reacting to a user initiating a mouse-click on a button to increase the blue value in the Color Sampler. 
 
 ```
 void make_blue_lighter() {
@@ -45,3 +48,6 @@ void make_blue_lighter() {
 
 }
 ```
+<p align="center">
+Fig. 3. The defined registered event behaviour wtihin the Controller class. 
+</p>
