@@ -28,4 +28,20 @@ When a mouse-click for increasing the blue value via the "+" button occurs the `
 
 
 
-The View must reflect changes from the Model data. The view uses the *getter* methods to acquire the necssary exposed components of the View which in this includes: the main window, the color viewer, and the blue textfield value. The Controller calls upon `view.get_main_window()`,`view.get_color_viewer()`, and `view.get_bluePalette_field()` to do the conduct the necessary visual changes to the user interface. 
+The View must reflect changes from the Model data. The registered event behaviour uses the *getter* methods to acquire the necssary exposed components of the View which in this includes: the main window, the color viewer, and the blue textfield value. The Controller calls upon `view.get_main_window()`,`view.get_color_viewer()`, and `view.get_bluePalette_field()` to do the conduct the necessary visual changes to the user interface. 
+
+```
+void make_blue_lighter() {
+
+  // Update the blue value within the Model data.
+  model.increment_blue();
+  
+  // Update window title bar to show new text.
+  view.get_main_window().setTitle(model.update_window_title());
+  // Update color viewer to display new color.
+  view.get_color_viewer().setBackground(new Color(model.get_preview_color().get_red(), model.get_preview_color().get_green(), model.get_preview_color().get_blue()));
+  // Update text field to show new blue value.
+  view.get_bluePalette_field().setText(String.valueOf(model.get_preview_color().get_blue()));
+
+}
+```
